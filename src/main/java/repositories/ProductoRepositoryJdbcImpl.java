@@ -1,5 +1,6 @@
 package repositories;
 
+import models.Categoria;
 import models.Productos;
 
 import java.sql.*;
@@ -59,11 +60,34 @@ public class ProductoRepositoryJdbcImpl implements Repository<Productos> {
 
     @Override
     public void guardar(Productos productos) throws SQLException {
+        String sql;
+        if (productos.getIdProducto()!=null && productos.getIdProducto()>0){
+            sql="update producto set idcategoria=?, nombre=?, precio=? where idcategoria=? ";
+        }else{
+            sql="insert into producto (idcategoria, nombre,precio) values (?,?,?)";
+        }
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setLong(1,productos.getCategoria().getIdCategoria());
+            stmt.setString(2,productos.getNombre());
+            stmt.setDouble(3,productos.getPrecio());
+            if(productos.getIdProducto()!=null && productos.getIdProducto()>0){
+                stmt.setLong(4,productos.getIdProducto());
+            }
+
+            stmt.executeUpdate();
+
+
+        }
 
     }
 
     @Override
     public void eliminar(Long idProducto) throws SQLException {
+        String sql="delete from producto where id=?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setLong(1,idProducto);
+            stmt.executeUpdate();
+        }
 
     }
     private static Productos getProductos(ResultSet rs) throws SQLException {
@@ -71,7 +95,10 @@ public class ProductoRepositoryJdbcImpl implements Repository<Productos> {
         p.setIdProducto(rs.getLong("idproducto"));
         p.setNombre(rs.getString("nombre"));
         p.setPrecio(rs.getDouble("precio"));
-        p.setCategoria(rs.getString("categoria"));
+        Categoria c=new Categoria();
+        c.setIdCategoria(rs.getLong("idcategoria"));
+        c.setNombre(rs.getString("categoria"));
+        p.setCategoria(c);
         return p;
     }
 }

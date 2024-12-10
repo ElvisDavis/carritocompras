@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBaseDatos {
-    private static String url="jdbc:mysql://localhost:3306/carro_compras?serverTimezone=UTC";
+    private static String url="jdbc:mysql://localhost:3306/carro?serverTimezone=UTC";
     private static String username="root";
     private static String password="";
 

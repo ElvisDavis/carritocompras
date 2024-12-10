@@ -20,6 +20,7 @@
 <%
     if (username.isPresent()) {%>
         <div style="color: blue">Hola <%=username.get()%>, bienvenido</div>
+        <div><a href="${pageContext.request.contextPath}/productos/form">Ingresar Productos</a></div>
    <% }%>
 <table>
     <tr>
@@ -36,10 +37,10 @@
     <tr>
         <td><%=p.getIdProducto()%></td>
         <td><%=p.getNombre()%></td>
-        <td><%=p.getCategoria()%></td>
+        <td><%=p.getCategoria().getNombre()%></td>
         <%if(username.isPresent()){%>
         <td><%=p.getPrecio()%></td>
-        <td><a href="<%=request.getContextPath()%>/agregar-carro?id=<%=p.getIdProducto()%>">agregar</a></td>
+        <td><a href="<%=request.getContextPath()%>/agregar-carro?idProducto=<%=p.getIdProducto()%>">agregar</a></td>
         <%}%>
     </tr>
     <%}%>

@@ -17,7 +17,7 @@ public interface Repository <T>{
     * El método porId recibe un identificador unico y retorna un objeto de tipo T
     * correspondiente a ese identificador
     * Se usa para buscar un registro especifico por su ID*/
-    T porId(Long idProducto) throws SQLException;
+    T porId(Long id) throws SQLException;
     /*Recibe un objeto de tipo T y lo guarda en la base de datos
     * Este método puede ser utilizado para crear o actualizar un registro, dependiendo de si el objeto
     * ya existe en la base de datos*/

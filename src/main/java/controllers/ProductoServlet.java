@@ -28,7 +28,11 @@ public class ProductoServlet extends HttpServlet {
         LoginService auth = new LoginServiceSessionImplement();
         Optional<String> usernameOptional=auth.getUsername(req);
 
-        resp.setContentType("text/html;charset=UTF-8");
+        //Seteamos los atributose de producto y username
+        req.setAttribute("productos", productos);
+        req.setAttribute("username", usernameOptional);
+
+       /* resp.setContentType("text/html;charset=UTF-8");
         try( PrintWriter out = resp.getWriter()) {
             //Creo la plantilla html
             out.print("<!DOCTYPE html>");
@@ -72,6 +76,7 @@ public class ProductoServlet extends HttpServlet {
             out.println("</table>");
             out.println("</body>");
             out.println("</html>");
-        }
+        }*/
+        getServletContext().getRequestDispatcher("/listar.jsp").forward(req, resp);
     }
 }
